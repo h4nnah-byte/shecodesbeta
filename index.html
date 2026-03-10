@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Bias Project - shecodes</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="console-wrapper">
+        <header class="scanlines">
+            <h1>AI Bias Adventure</h1>
+        </header>
+        <nav class="scanlines">
+            <a href="#start-game" class="nav-button active">START GAME</a>
+            <a href="#about" class="nav-button">ABOUT</a>
+        </nav>
+        <main>
+            <section id="start-game" class="game-screen scanlines">
+                <h2>Welcome to the AI Bias Game!</h2>
+                <p>Click below to begin your adventure and uncover AI biases.</p>
+                <button class="pixel-button" onclick="location.href='process.html'">BEGIN ADVENTURE</button>
+            </section>
+            <section id="about" class="game-screen scanlines hidden">
+                <h2>About the Project</h2>
+                <p>This project explores common biases in Artificial Intelligence through an interactive, retro-themed experience. Learn about how data, algorithms, and human decisions can influence AI outputs and contribute to unfair or inaccurate results.</p>
+                <p>Our goal is to raise awareness and provide insights into responsible AI development.</p>
+            </section>
+        </main>
+        <footer class="scanlines">
+            <p>&copy; shecodes 2026. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const navButtons = document.querySelectorAll('.nav-button');
+            const sections = document.querySelectorAll('.game-screen');
+
+            navButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // Only handle hash links for the current page. If it's an external link, let the browser handle it.
+                    if (e.target.getAttribute('href').startsWith('#')) {
+                        e.preventDefault();
+                        const targetId = e.target.getAttribute('href').substring(1);
+
+                        navButtons.forEach(btn => btn.classList.remove('active'));
+                        e.target.classList.add('active');
+
+                        sections.forEach(section => {
+                            if (section.id === targetId) {
+                                section.classList.remove('hidden');
+                            } else {
+                                section.classList.add('hidden');
+                            }
+                        });
+                    }
+                    // For 'process.html' link, the browser will navigate directly.
+                });
+            });
+        });
+    </script>
+</body>
+</html>

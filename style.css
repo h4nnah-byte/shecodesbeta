@@ -1,0 +1,2873 @@
+
+/* Global Styles */
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh; /* Reduced vertical height */
+    background-color: #fdeada; /* Pale pink background */
+    font-family: 'VT323', monospace; /* Default pixelated font */
+    color: #333;
+    font-size: 1.2em;
+    overflow: hidden; /* Hide scrollbars to maintain clean retro look */
+}
+
+/* Retro Console Wrapper */
+.console-wrapper {
+    position: relative;
+    width: 95%; /* Increased width */
+    max-width: 1200px; /* Increased max-width for horizontal space */
+    background-color: #fdbbab; /* Darker pink for console body */
+    border: 10px solid #8b6b7a; /* Darker pixel border */
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%238b6b7a"><path d="M0 0h24v24H0z" stroke-width="2" vector-effect="non-scaling-stroke" fill="transparent" /><path d="M2 2h20v20H2z" stroke-width="4" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 12 repeat;
+    box-shadow: 15px 15px 0px 0px #8b6b7a, /* Shadow for depth */
+                30px 30px 0px 0px #6d545e;
+    padding: 10px; /* Reduced padding */
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Reduced gap */
+    border-radius: 5px; /* Subtle roundness */
+}
+
+/* Scanline Effect */
+.scanlines::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0, 0, 0, 0.1) 50%, transparent 50%),
+                linear-gradient(90deg, rgba(0, 0, 0, 0.05) 50%, transparent 50%);
+    background-size: 100% 2px, 2px 100%;
+    pointer-events: none;
+    z-index: 100; /* Ensure scanlines are on top */
+}
+
+/* Header */
+header {
+    position: relative;
+    background-color: #fdbbab; /* Darker pink */
+    padding: 10px 15px; /* Reduced padding */
+    text-align: center;
+    border: 5px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="%238b6b7a"><path d="M0 0h12v12H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 6 repeat;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+header h1 {
+    font-family: 'Press Start 2P', cursive; /* Header pixelated font */
+    color: #6d545e;
+    margin: 0;
+    text-shadow: 2px 2px 0 #fff;
+    font-size: 2.2em; /* Slightly smaller font */
+}
+
+/* Navigation */
+nav {
+    position: relative;
+    background-color: #fdbbab;
+    padding: 8px 15px; /* Reduced padding */
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Reduced gap */
+    border: 5px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="%238b6b7a"><path d="M0 0h12v12H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 6 repeat;
+}
+
+.nav-button {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    text-decoration: none;
+    padding: 6px 12px; /* Reduced padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    font-size: 0.9em; /* Slightly smaller font */
+    cursor: pointer;
+}
+
+.nav-button:hover, .nav-button.active {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 #333;
+}
+
+/* Main Content Sections */
+main {
+    flex-grow: 1;
+    position: relative;
+}
+
+.game-screen {
+    position: relative;
+    background-color: #fdeada;
+    padding: 20px; /* Reduced padding */
+    border: 5px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="%238b6b7a"><path d="M0 0h12v12H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 6 repeat;
+    box-shadow: inset 0px 0px 15px rgba(0,0,0,0.3);
+    text-align: center;
+    line-height: 1.5;
+}
+
+.game-screen h2 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.6em; /* Slightly smaller font */
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.game-screen p {
+    color: #333;
+    margin-bottom: 0.8em; /* Reduced margin */
+}
+
+.hidden {
+    display: none;
+}
+
+/* Pixel Button */
+.pixel-button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em; /* Slightly smaller font */
+    color: #fdeada;
+    background-color: #8b6b7a;
+    border: none;
+    padding: 10px 20px; /* Reduced padding */
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #6d545e;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #333;
+}
+
+.pixel-button:hover {
+    background-color: #6d545e;
+    box-shadow: 1px 1px 0 #333;
+    transform: translate(2px, 2px);
+}
+
+/* Footer */
+footer {
+    position: relative;
+    background-color: #fdbbab;
+    padding: 10px 15px; /* Reduced padding */
+    text-align: center;
+    font-size: 0.8em; /* Slightly smaller font */
+    color: #6d545e;
+    border: 5px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="%238b6b7a"><path d="M0 0h12v12H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 6 repeat;
+}
+
+footer p {
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 95%;
+        padding: 10px;
+        gap: 10px;
+        box-shadow: 10px 10px 0px 0px #8b6b7a,
+                    20px 20px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.8em;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .nav-button {
+        font-size: 0.9em;
+        padding: 6px 10px;
+    }
+
+    .game-screen {
+        padding: 20px;
+    }
+
+    .game-screen h2 {
+        font-size: 1.5em;
+    }
+
+    .pixel-button {
+        font-size: 0.9em;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+    .console-wrapper {
+        border: 5px solid #8b6b7a;
+        box-shadow: 5px 5px 0px 0px #8b6b7a,
+                    10px 10px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.8em;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    flex-direction: row; /* Changed to row for horizontal layout */
+    justify-content: space-around; /* Distribute items horizontally */
+    gap: 10px; /* Adjusted gap */
+    padding: 8px 0; /* Reduced padding */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 3px; /* Reduced space between road segments and waypoints */
+    padding: 5px 0;
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.road-segment {
+    width: 20px; /* Reduced width */
+    height: 4px; /* Reduced height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 25px; /* Adjusted size */
+    height: 25px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 6px #ffeb3b, inset 0 0 6px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.9em; /* Adjusted font size */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 4px 8px; /* Reduced padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px; /* Reduced gap */
+}
+
+.arrow-button {
+    flex-grow: 1;
+    font-size: 1.1em; /* Adjusted font size */
+    padding: 12px 20px; /* Reduced padding */
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4;
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.8em; /* Adjusted font size */
+    margin-right: 4px; /* Reduced margin */
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0;
+    padding: 8px;
+    margin: 10px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace;
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 4px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto;
+    max-width: 85%; /* Increased max-width */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em; /* Adjusted font size */
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%; /* Increased max-width */
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* Responsive adjustments for process.html */
+@media (max-width: 768px) {
+    .road-map {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .road-segment {
+        width: 15px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    flex-direction: column; /* Stack roadmap and progress vertically */
+    gap: 15px;
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 10px 0;
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.road-segment {
+    width: 30px;
+    height: 6px;
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 30px; /* Made slightly wider */
+    height: 30px; /* Made slightly taller */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1em;
+    text-shadow: 1px 1px 0 #fff;
+    padding: 5px 10px;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.2em; /* Larger arrows */
+    padding: 15px 25px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.2em;
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.9em;
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 80%;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 8px;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.9em;
+    color: #a00;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.2em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 70%;
+    margin: 10px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* Responsive adjustments for process.html */
+@media (max-width: 768px) {
+    .road-map {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .road-segment {
+        width: 20px;
+    }
+    .waypoint {
+        width: 24px; /* Adjust size for small screens */
+        height: 24px;
+        font-size: 0.7em;
+    }
+    .arrow-button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 10px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    flex-direction: column; /* Stack roadmap and progress vertically */
+    gap: 15px;
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 10px 0;
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.road-segment {
+    width: 30px;
+    height: 6px;
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 30px; /* Made slightly wider */
+    height: 30px; /* Made slightly taller */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1em;
+    text-shadow: 1px 1px 0 #fff;
+    padding: 5px 10px;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.2em; /* Larger arrows */
+    padding: 15px 25px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.2em;
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.9em;
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 80%;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 8px;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.9em;
+    color: #a00;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.2em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 70%;
+    margin: 10px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 8px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #6d545e;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101; /* Ensure it's above scanlines and other elements */
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 #333;
+}
+
+/* Responsive adjustments for process.html */
+@media (max-width: 768px) {
+    .road-map {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .road-segment {
+        width: 20px;
+    }
+    .waypoint {
+        width: 24px; /* Adjust size for small screens */
+        height: 24px;
+        font-size: 0.7em;
+    }
+    .arrow-button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 10px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+
+    .home-button {
+        font-size: 0.9em; /* Match smaller nav-button font size for responsiveness */
+        padding: 6px 12px; /* Match smaller nav-button padding for responsiveness */
+        top: 5px;
+        right: 5px;
+        transform: none; /* Reset transform for smaller screens */
+        box-shadow: 2px 2px 0 #333; /* Adjusted shadow for smaller screens */
+    }
+
+    .home-button:hover {
+        transform: translateY(-1px); /* Slightly smaller hover effect for small screens */
+        box-shadow: 1px 1px 0 #333;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    flex-direction: column; /* Stack roadmap and progress vertically */
+    gap: 15px;
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 10px 0;
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.road-segment {
+    width: 30px;
+    height: 6px;
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 30px; /* Made slightly wider */
+    height: 30px; /* Made slightly taller */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1em;
+    text-shadow: 1px 1px 0 #fff;
+    padding: 5px 10px;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.2em; /* Larger arrows */
+    padding: 15px 25px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.2em;
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.9em;
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 80%;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 8px;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.9em;
+    color: #a00;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.2em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 70%;
+    margin: 10px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 8px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #6d545e;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101; /* Ensure it's above scanlines and other elements */
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 #333;
+}
+
+/* Responsive adjustments for process.html */
+@media (max-width: 768px) {
+    .road-map {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .road-segment {
+        width: 20px;
+    }
+    .waypoint {
+        width: 24px; /* Adjust size for small screens */
+        height: 24px;
+        font-size: 0.7em;
+    }
+    .arrow-button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 10px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+
+    .home-button {
+        font-size: 0.9em; /* Match smaller nav-button font size for responsiveness */
+        padding: 6px 12px; /* Match smaller nav-button padding for responsiveness */
+        top: 5px;
+        right: 5px;
+        transform: none; /* Reset transform for smaller screens */
+        box-shadow: 2px 2px 0 #333; /* Adjusted shadow for smaller screens */
+    }
+
+    .home-button:hover {
+        transform: translateY(-1px); /* Slightly smaller hover effect for small screens */
+        box-shadow: 1px 1px 0 #333;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    flex-direction: column; /* Stack roadmap and progress vertically */
+    gap: 15px;
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 10px 0;
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.road-segment {
+    width: 30px;
+    height: 6px;
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 30px; /* Made slightly wider */
+    height: 30px; /* Made slightly taller */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em;
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1em;
+    text-shadow: 1px 1px 0 #fff;
+    padding: 5px 10px;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.2em; /* Larger arrows */
+    padding: 15px 25px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.2em;
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.9em;
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 15px;
+    margin: 20px auto;
+    max-width: 80%;
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.5em;
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 8px;
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.9em;
+    color: #a00;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.2em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 70%;
+    margin: 10px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-family: 'Press Start 2P', cursive;
+    font-size: 1em;
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 8px 15px;
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 #6d545e;
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101; /* Ensure it's above scanlines and other elements */
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-2px);
+    box-shadow: 2px 2px 0 #333;
+}
+
+/* Responsive adjustments for process.html */
+@media (max-width: 768px) {
+    .road-map {
+        flex-wrap: wrap;
+        gap: 2px;
+    }
+    .road-segment {
+        width: 20px;
+    }
+    .waypoint {
+        width: 24px; /* Adjust size for small screens */
+        height: 24px;
+        font-size: 0.7em;
+    }
+    .arrow-button {
+        font-size: 1em;
+        padding: 10px 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 10px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+
+    .home-button {
+        font-size: 0.9em; /* Match smaller nav-button font size for responsiveness */
+        padding: 6px 12px; /* Match smaller nav-button padding for responsiveness */
+        top: 5px;
+        right: 5px;
+        transform: none; /* Reset transform for smaller screens */
+        box-shadow: 2px 2px 0 #333; /* Adjusted shadow for smaller screens */
+    }
+
+    .home-button:hover {
+        transform: translateY(-1px); /* Slightly smaller hover effect for small screens */
+        box-shadow: 1px 1px 0 #333;
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    display: flex; /* Ensure flex container for alignment */
+    flex-direction: row; /* Keep it a row to align home with roadmap */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
+    gap: 10px;
+    padding: 8px 15px; /* Added horizontal padding */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 0; /* Remove padding here, handled by process-nav */
+    background-color: transparent; /* Make roadmap background transparent, handled by process-nav */
+    border: none; /* Remove border, handled by process-nav */
+    border-image: none;
+}
+
+.road-segment {
+    width: 25px; /* Slightly smaller width */
+    height: 5px; /* Slightly smaller height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 28px; /* Adjusted size */
+    height: 28px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.9em; /* Slightly smaller font */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 4px 8px; /* Reduced padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.1em; /* Smaller arrows */
+    padding: 12px 20px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.85em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto; /* Reduced margin */
+    max-width: 90%; /* Increased max-width for more content space */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%;
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: relative; /* Changed from absolute */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em; /* Smaller font size */
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 6px 12px; /* Smaller padding */
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #6d545e; /* Smaller shadow */
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101;
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-1px); /* Smaller hover effect */
+    box-shadow: 1px 1px 0 #333;
+}
+
+/* General Layout Adjustments */
+body {
+    min-height: 95vh; /* Increased min-height to prevent cut-off */
+}
+
+.console-wrapper {
+    max-width: 1000px; /* Adjusted max-width for better fit */
+    padding: 15px; /* Slightly increased padding */
+    gap: 15px; /* Slightly increased gap */
+}
+
+.game-screen {
+    max-height: 350px; /* Fixed height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Maintained padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 98%;
+        padding: 8px;
+        gap: 8px;
+        box-shadow: 8px 8px 0px 0px #8b6b7a,
+                    16px 16px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .process-nav {
+        flex-direction: column; /* Stack for smaller screens */
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+    }
+
+    .home-button {
+        font-size: 0.7em;
+        padding: 5px 10px;
+        box-shadow: 1px 1px 0 #333;
+    }
+
+    .road-map {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+    .road-segment {
+        width: 15px;
+        height: 3px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .game-screen {
+        max-height: 250px; /* Adjust max-height for smaller screens */
+        padding: 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3em;
+    }
+    .console-wrapper {
+        border: 4px solid #8b6b7a;
+        box-shadow: 4px 4px 0px 0px #8b6b7a,
+                    8px 8px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.7em;
+    }
+    .home-button {
+        font-size: 0.6em;
+        padding: 4px 8px;
+    }
+    .game-screen {
+        max-height: 200px; /* Further adjust max-height for very small screens */
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    display: flex; /* Ensure flex container for alignment */
+    flex-direction: row; /* Keep it a row to align home with roadmap */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
+    gap: 10px;
+    padding: 8px 15px; /* Added horizontal padding */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 0; /* Remove padding here, handled by process-nav */
+    background-color: transparent; /* Make roadmap background transparent, handled by process-nav */
+    border: none; /* Remove border, handled by process-nav */
+    border-image: none;
+}
+
+.road-segment {
+    width: 25px; /* Slightly smaller width */
+    height: 5px; /* Slightly smaller height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 28px; /* Adjusted size */
+    height: 28px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.9em; /* Slightly smaller font */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 6px 8px; /* Adjusted padding to match home-button vertical padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.1em; /* Smaller arrows */
+    padding: 12px 20px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.85em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto; /* Reduced margin */
+    max-width: 90%; /* Increased max-width for more content space */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%;
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: relative; /* Changed from absolute */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em; /* Smaller font size */
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 6px 12px; /* Smaller padding */
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #6d545e; /* Smaller shadow */
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101;
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-1px); /* Smaller hover effect */
+    box-shadow: 1px 1px 0 #333;
+}
+
+/* General Layout Adjustments */
+body {
+    min-height: 95vh; /* Increased min-height to prevent cut-off */
+}
+
+.console-wrapper {
+    max-width: 1000px; /* Adjusted max-width for better fit */
+    padding: 15px; /* Slightly increased padding */
+    gap: 15px; /* Slightly increased gap */
+}
+
+.game-screen {
+    max-height: 350px; /* Fixed height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Maintained padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 98%;
+        padding: 8px;
+        gap: 8px;
+        box-shadow: 8px 8px 0px 0px #8b6b7a,
+                    16px 16px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .process-nav {
+        flex-direction: column; /* Stack for smaller screens */
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+    }
+
+    .home-button {
+        font-size: 0.7em;
+        padding: 5px 10px;
+        box-shadow: 1px 1px 0 #333;
+    }
+
+    .road-map {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+    .road-segment {
+        width: 15px;
+        height: 3px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .game-screen {
+        max-height: 250px; /* Adjust max-height for smaller screens */
+        padding: 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3em;
+    }
+    .console-wrapper {
+        border: 4px solid #8b6b7a;
+        box-shadow: 4px 4px 0px 0px #8b6b7a,
+                    8px 8px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.7em;
+    }
+    .home-button {
+        font-size: 0.6em;
+        padding: 4px 8px;
+    }
+    .game-screen {
+        max-height: 200px; /* Further adjust max-height for very small screens */
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    display: flex; /* Ensure flex container for alignment */
+    flex-direction: row; /* Keep it a row to align home with roadmap */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
+    gap: 10px;
+    padding: 8px 15px; /* Added horizontal padding */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 0; /* Remove padding here, handled by process-nav */
+    background-color: transparent; /* Make roadmap background transparent, handled by process-nav */
+    border: none; /* Remove border, handled by process-nav */
+    border-image: none;
+}
+
+.road-segment {
+    width: 25px; /* Slightly smaller width */
+    height: 5px; /* Slightly smaller height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 28px; /* Adjusted size */
+    height: 28px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em; /* Adjusted font size to match home-button */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 6px 8px; /* Adjusted padding to match home-button vertical padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.1em; /* Smaller arrows */
+    padding: 12px 20px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.85em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto; /* Reduced margin */
+    max-width: 90%; /* Increased max-width for more content space */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%;
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: relative; /* Changed from absolute */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em; /* Smaller font size */
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 6px 12px; /* Smaller padding */
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #6d545e; /* Smaller shadow */
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101;
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-1px); /* Smaller hover effect */
+    box-shadow: 1px 1px 0 #333;
+}
+
+/* General Layout Adjustments */
+body {
+    min-height: 95vh; /* Increased min-height to prevent cut-off */
+}
+
+.console-wrapper {
+    max-width: 1000px; /* Adjusted max-width for better fit */
+    padding: 15px; /* Slightly increased padding */
+    gap: 15px; /* Slightly increased gap */
+}
+
+.game-screen {
+    max-height: 350px; /* Fixed height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Maintained padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 98%;
+        padding: 8px;
+        gap: 8px;
+        box-shadow: 8px 8px 0px 0px #8b6b7a,
+                    16px 16px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .process-nav {
+        flex-direction: column; /* Stack for smaller screens */
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+    }
+
+    .home-button {
+        font-size: 0.7em;
+        padding: 5px 10px;
+        box-shadow: 1px 1px 0 #333;
+    }
+
+    .road-map {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+    .road-segment {
+        width: 15px;
+        height: 3px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .game-screen {
+        max-height: 250px; /* Adjust max-height for smaller screens */
+        padding: 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3em;
+    }
+    .console-wrapper {
+        border: 4px solid #8b6b7a;
+        box-shadow: 4px 4px 0px 0px #8b6b7a,
+                    8px 8px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.7em;
+    }
+    .home-button {
+        font-size: 0.6em;
+        padding: 4px 8px;
+    }
+    .game-screen {
+        max-height: 200px; /* Further adjust max-height for very small screens */
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    display: flex; /* Ensure flex container for alignment */
+    flex-direction: row; /* Keep it a row to align home with roadmap */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
+    gap: 10px;
+    padding: 8px 15px; /* Added horizontal padding */
+    width: 100%; /* Ensure it takes full width */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 0; /* Remove padding here, handled by process-nav */
+    background-color: transparent; /* Make roadmap background transparent, handled by process-nav */
+    border: none; /* Remove border, handled by process-nav */
+    border-image: none;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.road-segment {
+    width: 25px; /* Slightly smaller width */
+    height: 5px; /* Slightly smaller height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 28px; /* Adjusted size */
+    height: 28px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.8em; /* Adjusted font size to match home-button */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 6px 8px; /* Adjusted padding to match home-button vertical padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.1em; /* Smaller arrows */
+    padding: 12px 20px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.85em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto; /* Reduced margin */
+    max-width: 90%; /* Increased max-width for more content space */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%;
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: relative; /* Changed from absolute */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.8em; /* Smaller font size */
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 6px 12px; /* Smaller padding */
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #6d545e; /* Smaller shadow */
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101;
+    margin: 0; /* Explicitly remove any default margins */
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-1px); /* Smaller hover effect */
+    box-shadow: 1px 1px 0 #333;
+}
+
+/* General Layout Adjustments */
+body {
+    min-height: 95vh; /* Increased min-height to prevent cut-off */
+}
+
+.console-wrapper {
+    max-width: 1000px; /* Adjusted max-width for better fit */
+    padding: 15px; /* Slightly increased padding */
+    gap: 15px; /* Slightly increased gap */
+}
+
+.game-screen {
+    max-height: 350px; /* Fixed height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Maintained padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 98%;
+        padding: 8px;
+        gap: 8px;
+        box-shadow: 8px 8px 0px 0px #8b6b7a,
+                    16px 16px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .process-nav {
+        flex-direction: column; /* Stack for smaller screens */
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+    }
+
+    .home-button {
+        font-size: 0.7em;
+        padding: 5px 10px;
+        box-shadow: 1px 1px 0 #333;
+    }
+
+    .road-map {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+    .road-segment {
+        width: 15px;
+        height: 3px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .game-screen {
+        max-height: 250px; /* Adjust max-height for smaller screens */
+        padding: 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3em;
+    }
+    .console-wrapper {
+        border: 4px solid #8b6b7a;
+        box-shadow: 4px 4px 0px 0px #8b6b7a,
+                    8px 8px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.7em;
+    }
+    .home-button {
+        font-size: 0.6em;
+        padding: 4px 8px;
+    }
+    .game-screen {
+        max-height: 200px; /* Further adjust max-height for very small screens */
+    }
+}
+
+/* process.html specific styles */
+.process-nav {
+    display: flex; /* Ensure flex container for alignment */
+    flex-direction: row; /* Keep it a row to align home with roadmap */
+    justify-content: space-between; /* Space out items */
+    align-items: center; /* Vertically align items */
+    gap: 5px; /* Reduced gap */
+    padding: 5px 10px; /* Reduced padding */
+    width: 100%; /* Ensure it takes full width */
+}
+
+.road-map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px; /* Space between road segments and waypoints */
+    padding: 0; /* Remove padding here, handled by process-nav */
+    background-color: transparent; /* Make roadmap background transparent, handled by process-nav */
+    border: none; /* Remove border, handled by process-nav */
+    border-image: none;
+    flex-shrink: 0; /* Prevent shrinking */
+}
+
+.road-segment {
+    width: 25px; /* Slightly smaller width */
+    height: 5px; /* Slightly smaller height */
+    background-color: #6d545e; /* Darker pixel road color */
+    box-shadow: inset 0 0 3px rgba(0,0,0,0.5);
+}
+
+.waypoint {
+    width: 28px; /* Adjusted size */
+    height: 28px; /* Adjusted size */
+    background-color: #fdeada; /* Dim waypoint color */
+    border: 2px solid #8b6b7a;
+    border-radius: 2px; /* Changed from 50% to 2px for square/rectangular look */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size */
+    cursor: pointer;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.3);
+    transition: all 0.2s ease-in-out;
+}
+
+.waypoint.active {
+    background-color: #ffeb3b; /* Bright, active waypoint color */
+    border-color: #ffc107;
+    box-shadow: 0 0 8px #ffeb3b, inset 0 0 8px #ffeb3b;
+    color: #333;
+}
+
+.progress-indicator {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 0.7em; /* Adjusted font size to match home-button */
+    text-shadow: 1px 1px 0 #fff;
+    padding: 6px 8px; /* Adjusted padding to match home-button vertical padding */
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    flex-shrink: 0; /* Prevent shrinking */
+    white-space: nowrap;
+}
+
+.nav-controls {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.arrow-button {
+    flex-grow: 1; /* Make buttons fill space */
+    font-size: 1.1em; /* Smaller arrows */
+    padding: 12px 20px;
+}
+
+.arrow-button:disabled {
+    background-color: #b5a4a4; /* Greyed out for disabled */
+    color: #fdeada;
+    box-shadow: 3px 3px 0 #9b8b8b;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.pixel-icon {
+    font-size: 0.9em; /* Adjust size for icons */
+    margin-right: 5px;
+}
+
+.pixel-art-container {
+    background-color: #e0e0e0; /* Light background for pixel art */
+    padding: 10px;
+    margin: 15px auto;
+    border: 2px dashed #8b6b7a;
+    max-width: fit-content;
+}
+
+.pixel-art {
+    font-family: 'VT323', monospace; /* Ensure pixel font for art */
+    font-size: 1.1em; /* Adjusted font size */
+    line-height: 1;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+}
+
+.caption {
+    font-size: 0.85em; /* Adjusted font size */
+    color: #6d545e;
+    margin-top: 5px;
+}
+
+.definition-box, .data-table, .visualization-placeholder, .final-comparison {
+    background-color: #fdbbab;
+    border: 3px solid #8b6b7a;
+    padding: 12px; /* Reduced padding */
+    margin: 15px auto; /* Reduced margin */
+    max-width: 90%; /* Increased max-width for more content space */
+    box-shadow: inset 0px 0px 8px rgba(0,0,0,0.2);
+}
+
+.definition-box p, .final-comparison p, .final-comparison li {
+    text-align: left;
+    margin-bottom: 0.4em; /* Reduced margin */
+}
+
+.definition-box strong {
+    color: #6d545e;
+}
+
+.data-table table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 8px;
+}
+
+.data-table th, .data-table td {
+    border: 1px solid #8b6b7a;
+    padding: 6px; /* Reduced padding */
+    text-align: center;
+    font-family: 'VT323', monospace;
+    color: #333;
+}
+
+.data-table th {
+    background-color: #fdeada;
+    color: #6d545e;
+    font-family: 'Press Start 2P', cursive;
+}
+
+.note {
+    font-size: 0.8em; /* Adjusted font size */
+    color: #a00;
+    font-weight: bold;
+    margin-top: 12px;
+}
+
+.final-comparison h3 {
+    font-family: 'Press Start 2P', cursive;
+    color: #6d545e;
+    font-size: 1.1em;
+    margin-top: 0;
+    text-shadow: 1px 1px 0 #fff;
+}
+
+.final-comparison ul {
+    list-style-type: none;
+    padding: 0;
+    text-align: left;
+    max-width: 80%;
+    margin: 8px auto;
+}
+
+.final-comparison li::before {
+    content: '▶ ';
+    color: #6d545e;
+    font-family: 'VT323', monospace;
+}
+
+/* New Home Button styles */
+.home-button {
+    position: relative; /* Changed from absolute */
+    font-family: 'Press Start 2P', cursive;
+    font-size: 0.7em; /* Smaller font size */
+    color: #6d545e;
+    background-color: #fdeada;
+    border: 3px solid #8b6b7a;
+    border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8" fill="none" stroke="%238b6b7a"><path d="M0 0h8v8H0z" stroke-width="1" vector-effect="non-scaling-stroke" fill="transparent" /></svg>') 4 repeat;
+    padding: 6px 12px; /* Smaller padding */
+    text-decoration: none;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #6d545e; /* Smaller shadow */
+    transition: all 0.1s ease-in-out;
+    text-shadow: 1px 1px 0 #fff;
+    z-index: 101;
+    margin: 0; /* Explicitly remove any default margins */
+    flex-shrink: 0; /* Prevent shrinking */
+    white-space: nowrap;
+}
+
+.home-button:hover {
+    background-color: #8b6b7a;
+    color: #fdeada;
+    text-shadow: 1px 1px 0 #333;
+    transform: translateY(-1px); /* Smaller hover effect */
+    box-shadow: 1px 1px 0 #333;
+}
+
+/* General Layout Adjustments */
+body {
+    min-height: 95vh; /* Increased min-height to prevent cut-off */
+}
+
+.console-wrapper {
+    max-width: 1000px; /* Adjusted max-width for better fit */
+    padding: 15px; /* Slightly increased padding */
+    gap: 15px; /* Slightly increased gap */
+}
+
+.game-screen {
+    max-height: 350px; /* Fixed height for scrollable content */
+    overflow-y: auto; /* Enable vertical scrolling */
+    padding: 20px; /* Maintained padding */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .console-wrapper {
+        width: 98%;
+        padding: 8px;
+        gap: 8px;
+        box-shadow: 8px 8px 0px 0px #8b6b7a,
+                    16px 16px 0px 0px #6d545e;
+    }
+
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .process-nav {
+        flex-direction: column; /* Stack for smaller screens */
+        align-items: center;
+        gap: 8px;
+        padding: 5px 10px;
+    }
+
+    .home-button {
+        font-size: 0.7em;
+        padding: 5px 10px;
+        box-shadow: 1px 1px 0 #333;
+    }
+
+    .road-map {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+    .road-segment {
+        width: 15px;
+        height: 3px;
+    }
+    .waypoint {
+        width: 20px;
+        height: 20px;
+        font-size: 0.6em;
+    }
+    .arrow-button {
+        font-size: 0.9em;
+        padding: 8px 12px;
+    }
+    .game-screen {
+        max-height: 250px; /* Adjust max-height for smaller screens */
+        padding: 15px;
+    }
+    .definition-box, .data-table, .visualization-placeholder, .final-comparison {
+        max-width: 95%;
+        padding: 8px;
+    }
+    .final-comparison ul {
+        max-width: 95%;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.3em;
+    }
+    .console-wrapper {
+        border: 4px solid #8b6b7a;
+        box-shadow: 4px 4px 0px 0px #8b6b7a,
+                    8px 8px 0px 0px #6d545e;
+    }
+    footer p {
+        font-size: 0.7em;
+    }
+    .home-button {
+        font-size: 0.6em;
+        padding: 4px 8px;
+    }
+    .game-screen {
+        max-height: 200px; /* Further adjust max-height for very small screens */
+    }
+}
