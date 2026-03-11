@@ -24,90 +24,67 @@
                 <div class="waypoint" data-stop="3">4</div>
                 <div class="road-segment"></div>
                 <div class="waypoint" data-stop="4">5</div>
-                <div class="road-segment"></div>
-                <div class="waypoint" data-stop="5">6</div>
             </div>
-            <div class="progress-indicator">STEP 1 OF 6</div>
         </nav>
         <main>
             <section id="step0" class="game-screen scanlines">
-                <h2>STOP 1: DATA SELECTION</h2>
-                <p>Our journey begins by selecting relevant data. We focused on data that included males and females accepted for a job placement. The demographic we chose to focus on was gender.</p>
-                <p>The dataset includes various features such as degree percentage, work experience, and interview score.</p>
-                <p>Ensuring the data includes sufficient factors is important, otherwise the model may perform poorly or inaccurately for those groups, leading to biased predictions.</p>
-                <p>We obtained the data set from Kraggle.</p>
-                <p>Our analysis showed that males were placed in the job more frequently than females, prompting us to investigate further biases that may have contributed to this difference.</p>
-                <p>Ultimately, this stage highlights how biases can affect the data to create a correlation. Recognizing these inherent biases is the first step towards mitigating them.</p>
-                <div style="text-align: center;">
-                    <img src="https://image2url.com/r2/default/images/1773180535700-cd772d40-cbbe-4606-915e-4ae33fb19a35.png" alt="Job Placement Disparity Diagram" style="max-width: 100%; height: auto; border: 2px solid #8b6b7a;"/>
-                    <p class="caption">Job Placement Disparity</p>
-                </div>
+                <h2>STEP 1: FIND A DATASET</h2>
+                <p class="main-point">Use Kaggle.com to find a dataset with a specific demographic difference:</p>
+                <p class="example-label">Example:</p>
+                <ul class="example-list">
+                    <li>Sex (male vs female)</li>
+                    <li>Race (white vs. non-white)</li>
+                    <li>Nationality (british born, non-british born)</li>
+                </ul>
+                <p class="main-point">This will help establish a correlation between your topic and the demographic.</p>
+                <p class="example-label">Example:</p>
+                <ul class="example-list">
+                    <li>Anemia is more common in non-white people than white people</li>
+                </ul>
             </section>
             <section id="step1" class="game-screen scanlines hidden">
-                <h2>STOP 2: INITIAL EXPLORATION</h2>
-                <p>Our first analytical step involved plotting simple correlations, specifically looking at `gender` versus `job placement status`. The bar chart, when looking at the ratios, showed a correlation between gender and acceptance.</p>
-                <p>We also examined another factor: number of candidates with work experience for each gender, which showed a correlation to the status of their acceptance. The data originally had work experience as 'No' or 'Yes', so we had to change this format into binary values '0' and '1' respectively.</p>
-                <p>This phase taught us a critical lesson: simple correlations can be misleading when investigating complex phenomena. Despite the original data showing a correlation between gender and acceptance, more biases are found when investigating.</p>
-                <div style="text-align: center;">
-                    <img src="https://image2url.com/r2/default/images/1773180627129-3b154ddf-947d-4116-8d60-c02d941f8175.png" alt="Correlations Found Diagram" style="max-width: 100%; height: auto; border: 2px solid #8b6b7a;"/>
-                    <p class="caption">Correlations Found</p>
-                </div>
+                <h2>STEP 2: ANALYSE THE DATA</h2>
+                <p class="main-point">Download the dataset and open a Google Colab to start analysing.</p>
+                <p class="main-point">Prompt Gemini to analyse your data and give results:</p>
+                <p class="example-label">Example prompt:</p>
+                <ul class="example-list">
+                    <li>"Show me the ratio of white people that have anemia to the ratio that don't, alongside the ratio for non-white people"</li>
+                </ul>
+                <p>Note: (You may use DeepSeek to assist in making prompts)</p>
+                <p class="main-point">This will hopefully show a clear correlation between race and condition.</p>
             </section>
             <section id="step2" class="game-screen scanlines hidden">
-                <h2>STOP 3: BIAS vs. CORRELATION</h2>
-                <p>A crucial realization in our journey was that correlation does not equal bias. While data might show correlations between demographic features and outcomes, true AI bias involves systemic unfairness or disparate impact, not just statistical relationships.</p>
-                <div class="definition-box">
-                    <h3>What is Bias?</h3>
-                    <p><strong>Bias in AI</strong> refers to systemic and repeatable errors in a computer system's output that create unfair outcomes, such as favoring one arbitrary group of users over others.</p>
-                    <p><strong>Disparate Impact</strong> occurs when a neutral policy or practice, such as an AI model's decision, has a disproportionately adverse impact on a protected group.</p>
-                </div>
-                <p>AI systems can inadvertently perpetuate or even amplify societal biases present in their training data. This happens when models learn from historical data that reflects existing inequalities, leading to reproduce those same inequalities in their predictions.</p>
-                <p>The ethical implications of unchecked AI bias are profound. Biased models can lead to discriminatory practices in areas like hiring, lending, or even criminal justice, causing significant harm to individuals and society. Therefore, identifying and mitigating bias is a moral imperative.</p>
-                <p>The objective of this project is to highlight such issues, demonstrating that AI is not inherently neutral but is a product of its data and design. Understanding the difference between correlation and true bias is foundational to building responsible AI.</p>
+                <h2>STEP 3: DIG DEEPER</h2>
+                <p class="main-point">Now, attempt to find biases. Are there factors affecting the correlation?</p>
+                <p class="example-label">Example question:</p>
+                <ul class="example-list">
+                    <li>Why are more non-white people struggling with anemia?</li>
+                </ul>
+                <p class="main-point">Ask for charts to prove some biases you predict may exist:</p>
+                <p class="example-label">Examples of biases to investigate:</p>
+                <ul class="example-list">
+                    <li>Anemia more common in Asia than Africa?</li>
+                    <li>Anemia more common in women?</li>
+                </ul>
             </section>
             <section id="step3" class="game-screen scanlines hidden">
-                <h2>STOP 4: MODELING - LOGISTIC REGRESSION</h2>
-                <p>To quantify potential biases, we built a Logistic Regression model tasked with presenting statistics that would prove a bias or not. When we plugged in the data for gender against acceptance, our first investigated correlation, the Logistic Regression model's predictions did show a disparate impact against females (DIR of 0.6532), suggesting that the model learned patterns.</p>
-                <p>A positive coefficient for 'Gender (Male)' suggests males are slightly more likely to be accepted into the job, *all else being equal*, which could indicate a subtle bias. This result immediately raised a red flag, prompting us to investigate whether this was a genuine predictive factor or a sign of algorithmic unfairness.</p>
-                <p>The interpretation of this coefficient is crucial: it doesn't necessarily mean males are accepted more, but that the model *learned* to assign a higher probability of acceptance of males based on the training data. This points towards a potential amplification of existing data imbalances.</p>
-                <p>This finding suggested a subtle, yet measurable, bias introduced or amplified by the Logistic Regression model. Even seemingly small coefficients can have a cumulative impact on predictions, leading to disparate outcomes across demographic groups.</p>
-                <p>Concerns about the model's fairness and predictive validity across groups were solidified. The direct influence of gender, as revealed by the coefficient, underscored the importance of rigorous bias detection and mitigation strategies in model development.</p>
-                <div style="text-align: center;">
-                    <img src="https://image2url.com/r2/default/images/1773180652697-af5aa318-c8fd-4cce-ae8b-a00ae943bccc.png" alt="Bias Detected Diagram" style="max-width: 100%; height: auto; border: 2px solid #8b6b7a;"/>
-                    <p class="caption">Bias Detected</p>
-                </div>
+                <h2>STEP 4: BUILD YOUR AI SYSTEM</h2>
+                <p class="main-point">Use Google Colab and Gemini to generate models to analyse the data for you. This will help us see if the AI's analysis is consistent with the biases we found, or if it amplifies or minimises it.</p>
+                <p class="example-label">Example question to ask:</p>
+                <ul class="example-list">
+                    <li>Does it significantly favour women?</li>
+                </ul>
+                <p class="main-point">Ask it to make a Logistic Regression model and a Random Forest model. This will allow us to compare results of different models within our system.</p>
+                <p class="main-point">Ask Gemini for a Disparate Impact Analysis using these models. Choose a significant value e.g., 0.8. If the values are below 0.8, that is evidence to suggest that the AI model is biased.</p>
             </section>
             <section id="step4" class="game-screen scanlines hidden">
-                <h2>STOP 5: MODELING - RANDOM FOREST</h2>
-                <p>Following the Logistic Regression, we trained a more complex Random Forest model. Random Forests are ensemble learning methods capable of capturing non-linear relationships and interactions between features, potentially offering different insights into bias.</p>
-                <p>Feature importance analysis for the Random Forest model revealed no significant correlation, despite the Logistic Regression model suggesting otherwise.</p>
-                <p>Crucially, this difference may arise because Random Forest models capture complex interactions between variables, whereas Logistic Regression evaluates more direct linear relationships between predictors and the outcome.</p>
-                <p>This scenario demonstrated how decision trees, the building blocks of a Random Forest, tend to ignore subtle demographic cues within the data. These cues, when consistently present, can lead the model to create branches and decision paths that differentiate outcomes based on gender. Here, it did not do that.</p>
-                <p>The challenge of building truly fair and unbiased complex models was underscored. Even with algorithms designed for high accuracy, vigilance is required to ensure that accuracy isn't achieved at the expense of fairness, especially concerning sensitive attributes like gender.</p>
-                <div class="visualization-placeholder">
-                    <pre class="pixel-art">
-  (Node)
-  /    \
- (Gender?) (Other Features)
-  /  \\
-(Pass) (Fail)
-                    </pre>
-                    <p class="caption">Simplified Decision Tree Node</p>
-                </div>
-            </section>
-            <section id="step5" class="game-screen scanlines hidden">
-                <h2>STOP 6: THE VERDICT</h2>
-                <h3>AI BIAS DETECTED!</h3>
-                <div class="final-comparison">
-                    <h3>Summary of Findings:</h3>
-                    <ul>
-                        <li>Disparate Impact Ratio (DIR) for passing: Original Data: 0.8779, Logistic Regression Prediction: 0.6532, Random Forest Prediction: 0.8542.</li>
-                        <li>The Logistic Regression model significantly *amplified* the disparity in pass rates between genders, indicating a severe bias.</li>
-                        <li>Random Forest, while better than Logistic Regression, still showed gender as a key determinant.</li>
-                        <li>This suggests a combination of <strong>representational bias</strong> in the training data and <strong>model amplification</strong> of that bias.</li>
-                    </ul>
-                    <p class="note"><strong>Conclusion:</strong> Our AI model, when left unchecked, exhibited bias against certain gender groups in predicting academic success.</p>
-                </div>
+                <h2>STEP 5: QUANTIFY A FINAL BIAS SCORE</h2>
+                <p>This step is under construction</p>
+                <p>This step is under construction</p>
+                <p>This step is under construction</p>
+                <p>This step is under construction</p>
+                <br>
+                <p class="main-point">Final question: Is your AI system biased?</p>
             </section>
         </main>
         <div class="nav-controls scanlines">
@@ -116,7 +93,7 @@
         </div>
         <footer class="scanlines">
             <p>&copy; shecodes 2026. All rights reserved.</p>
-</footer>
+        </footer>
     </div>
     <script src="process.js"></script>
 </body>

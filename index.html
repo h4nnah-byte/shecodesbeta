@@ -10,7 +10,7 @@
 <body>
     <div class="console-wrapper">
         <header class="scanlines">
-            <h1>AI Bias Adventure</h1>
+            <h1>AI Bias Auditor</h1>
         </header>
         <nav class="scanlines">
             <a href="#start-game" class="nav-button active">START GAME</a>
@@ -23,9 +23,17 @@
                 <button class="pixel-button" onclick="location.href='process.html'">BEGIN ADVENTURE</button>
             </section>
             <section id="about" class="game-screen scanlines hidden">
-                <h2>About the Project</h2>
-                <p>This project explores common biases in Artificial Intelligence through an interactive, retro-themed experience. Learn about how data, algorithms, and human decisions can influence AI outputs and contribute to unfair or inaccurate results.</p>
-                <p>Our goal is to raise awareness and provide insights into responsible AI development.</p>
+                <h2>AI Bias Auditor: Can Your AI Be Fair?</h2>
+                <p>The increasing reliance on AI for critical decisions, such as job candidate screening, risks automating and amplifying historical biases. Our project directly confronts this challenge: Can we truly measure and mitigate bias in AI systems?</p>
+
+                <h3>What We Explored:</h3>
+                <p>We trained and rigorously audited three machine learning models (Logistic Regression, Random Forest, and a Fairness-aware model) using real job placement data. Our auditing process involved statistical tests, Disparate Impact Ratio (DIR), and custom fairness metrics.</p>
+
+                <h3>A Striking Paradox:</h3>
+                <p>Our analysis uncovered a critical paradox: one model, despite attempting to favor women (indicated by a negative male coefficient), unexpectedly still exhibited discriminatory outcomes against them.</p>
+
+                <h3>Our Core Finding:</h3>
+                <p>High model accuracy does not equate to fairness. Our framework provides a clear methodology to quantify bias, underscoring its absolute necessity before deploying any AI system that shapes people's opportunities. Ensure your AI is not just smart, but equitable.</p>
             </section>
         </main>
         <footer class="scanlines">
